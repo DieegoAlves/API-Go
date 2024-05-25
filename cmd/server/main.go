@@ -25,4 +25,5 @@ func main() {
 
 	http.HandleFunc("/products", productHandler.CreateProduct)
 	http.ListenAndServe(":8000", nil)
+
 }
