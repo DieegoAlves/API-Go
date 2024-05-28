@@ -28,7 +28,7 @@ func main() {
 	productHandler := handlers.NewProductHandler(productDB)
 
 	userDB := database.NewUser(db)
-	userHandler := handlers.NewUserHandler(userDB, configs.TokenAuth, configs.JWTExpiresIn)
+	userHandler := handlers.NewUserHandler(userDB)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -40,6 +40,8 @@ func main() {
 	r.Route("/products", func(r chi.Router) {
 		r.Use(jwtauth.Verifier(configs.TokenAuth))
 		r.Use(jwtauth.Authenticator)
+		r.Use(middleware.WithValue("jwt", configs.TokenAuth))
+		r.Use(middleware.WithValue("JWTExpiresIn", configs.JWTExpiresIn))
 		r.Post("/", productHandler.CreateProduct)
 		r.Get("/{id}", productHandler.GetProduct)
 		r.Get("/", productHandler.GetAllProducts)
@@ -53,7 +55,7 @@ func main() {
 	http.ListenAndServe(":8000", r)
 }
 
-//Middleware feita na mão
+//Middleware feito na mão
 //func LogRequest(next http.Handler) http.Handler {
 //	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 //		log.Printf("Request: %s %s", r.Method, r.URL.Path)
