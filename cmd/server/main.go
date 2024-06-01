@@ -13,6 +13,24 @@ import (
 	"net/http"
 )
 
+// @title				Go Expert API Example
+// @version 			1.0
+// @description 		Product API with Authentication
+// @termsOfService		http://swagger.io/terms/
+//
+// @contact.name 		Diego Alves Ferreira
+// @contact.url			https://www.linkedin.com/in/dieegoalves/
+// @contact.email		diegoaf@ucl.br
+//
+// @license.name		Revolution Softwares
+// @license.url			http://www.revolutionsoftwares.com
+//
+// @host				localhost:8080
+// @BasePath			/
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Autorization
+
 func main() {
 	configs, err := configs.LoadConfig("./cmd/server")
 	if err != nil {
