@@ -1,0 +1,28 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Product API with Authentication",
+        "title": "Go Expert API Example",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "Diego Alves Ferreira",
+            "url": "https://www.linkedin.com/in/dieegoalves/",
+            "email": "diegoaf@ucl.br"
+        },
+        "license": {
+            "name": "Revolution Softwares",
+            "url": "http://www.revolutionsoftwares.com"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:8000",
+    "basePath": "/",
+    "paths": {},
+    "securityDefinitions": {
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Autorization",
+            "in": "header"
+        }
+    }
+}
