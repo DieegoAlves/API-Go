@@ -13,6 +13,24 @@ import (
 	"net/http"
 )
 
+// @title				Go Expert API Example
+// @version 			1.0
+// @description 		Product API with Authentication
+// @termsOfService		http://swagger.io/terms/
+//
+// @contact.name 		Diego Alves Ferreira
+// @contact.url			https://www.linkedin.com/in/dieegoalves/
+// @contact.email		diegoaf@ucl.br
+//
+// @license.name		Revolution Softwares
+// @license.url			http://www.revolutionsoftwares.com
+//
+// @host				localhost:8080
+// @BasePath			/
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Autorization
+
 func main() {
 	configs, err := configs.LoadConfig("./cmd/server")
 	if err != nil {
@@ -28,7 +46,7 @@ func main() {
 	productHandler := handlers.NewProductHandler(productDB)
 
 	userDB := database.NewUser(db)
-	userHandler := handlers.NewUserHandler(userDB, configs.TokenAuth, configs.JWTExpiresIn)
+	userHandler := handlers.NewUserHandler(userDB)
 
 	r := chi.NewRouter()
 	r.Use(middleware.Logger)
@@ -40,6 +58,8 @@ func main() {
 	r.Route("/products", func(r chi.Router) {
 		r.Use(jwtauth.Verifier(configs.TokenAuth))
 		r.Use(jwtauth.Authenticator)
+		r.Use(middleware.WithValue("jwt", configs.TokenAuth))
+		r.Use(middleware.WithValue("JWTExpiresIn", configs.JWTExpiresIn))
 		r.Post("/", productHandler.CreateProduct)
 		r.Get("/{id}", productHandler.GetProduct)
 		r.Get("/", productHandler.GetAllProducts)
@@ -53,7 +73,7 @@ func main() {
 	http.ListenAndServe(":8000", r)
 }
 
-//Middleware feita na mão
+//Middleware feito na mão
 //func LogRequest(next http.Handler) http.Handler {
 //	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 //		log.Printf("Request: %s %s", r.Method, r.URL.Path)

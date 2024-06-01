@@ -1,0 +1,21 @@
+basePath: /
+host: localhost:8080
+info:
+  contact:
+    email: diegoaf@ucl.br
+    name: Diego Alves Ferreira
+    url: https://www.linkedin.com/in/dieegoalves/
+  description: Product API with Authentication
+  license:
+    name: Revolution Softwares
+    url: http://www.revolutionsoftwares.com
+  termsOfService: http://swagger.io/terms/
+  title: Go Expert API Example
+  version: "1.0"
+paths: {}
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: Autorization
+    type: apiKey
+swagger: "2.0"
